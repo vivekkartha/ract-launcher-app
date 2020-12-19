@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         appsList = LauncherSdk.getInstance(requireContext()).getInstalledApps()
-        launcherAdapter = LauncherAdapter(appsList)
+        launcherAdapter = LauncherAdapter(appsList, requireContext())
         rvLauncher.apply {
             adapter = launcherAdapter
             layoutManager = LinearLayoutManager(requireContext())

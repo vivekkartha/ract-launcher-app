@@ -1,5 +1,6 @@
 package com.tesseract.ract
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tesseract.launchersdk.appinfo.AppInfo
 import kotlinx.android.synthetic.main.row_launcher.view.*
 
-class LauncherAdapter(private var appsList: List<AppInfo>) :
+class LauncherAdapter(private var appsList: List<AppInfo>, private val context: Context) :
     RecyclerView.Adapter<LauncherAdapter.LaunchHolder>() {
     inner class LaunchHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -21,7 +22,16 @@ class LauncherAdapter(private var appsList: List<AppInfo>) :
     override fun onBindViewHolder(holder: LaunchHolder, position: Int) {
         val appInfo = appsList[position]
         holder.itemView.apply {
-            name.text = appInfo.toString()
+            name.text = appInfo.name
+            val packageAndActivity =
+                appInfo.activityName?.let { activity -> "${appInfo.packageName}/$activity" }
+                    ?: appInfo.packageName
+            appMetaData.text = context.getString(
+                R.string.app_info,
+                appInfo.versionName,
+                appInfo.versionCode.toString(),
+                packageAndActivity
+            )
             icon.setImageDrawable(appInfo.icon)
         }
     }
