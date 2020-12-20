@@ -54,8 +54,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun appMatches(app: AppInfo, searchTerm: String) =
-        app.name?.toLowerCase(Locale.getDefault())
-            ?.contains(searchTerm.toLowerCase(Locale.getDefault())) == true
+        app.name?.toLowerCase(Locale.getDefault())?.replace("\\s+", "")
+            ?.contains(searchTerm.toLowerCase(Locale.getDefault()).replace("\\s+", "")) == true
 
     companion object {
         fun newInstance() = HomeFragment()
