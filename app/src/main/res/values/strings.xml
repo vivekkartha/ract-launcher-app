@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Ract Launcher</string>
     <string name="app_info">v.%1$s(%2$s) %3$s</string>
+    <string name="start_typing">Start typing...</string>
 </resources>

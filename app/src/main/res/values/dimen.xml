@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="iconSize">50dp</dimen>
+    <!--Spacing -->
+    <dimen name="spacing1x">8dp</dimen>
+    <dimen name="spacing2x">16dp</dimen>
+    <dimen name="spacing3x">24p</dimen>
+    <dimen name="spacing4x">28p</dimen>
+
+    <!-- Text size-->
+    <dimen name="text_20sp">20sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="text_12sp">12sp</dimen>
+</resources>

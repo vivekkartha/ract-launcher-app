@@ -10,6 +10,9 @@ import kotlinx.android.synthetic.main.row_launcher.view.*
 
 class LauncherAdapter(private var appsList: List<AppInfo>, private val context: Context) :
     RecyclerView.Adapter<LauncherAdapter.LaunchHolder>() {
+
+    lateinit var onClickListener: (appInfo: AppInfo) -> Unit
+
     inner class LaunchHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchHolder {
@@ -23,9 +26,7 @@ class LauncherAdapter(private var appsList: List<AppInfo>, private val context: 
         val appInfo = appsList[position]
         holder.itemView.apply {
             name.text = appInfo.name
-            val packageAndActivity =
-                appInfo.activityName?.let { activity -> "${appInfo.packageName}/$activity" }
-                    ?: appInfo.packageName
+            val packageAndActivity = getAppLaunchInfo(appInfo)
             appMetaData.text = context.getString(
                 R.string.app_info,
                 appInfo.versionName,
@@ -33,8 +34,15 @@ class LauncherAdapter(private var appsList: List<AppInfo>, private val context: 
                 packageAndActivity
             )
             icon.setImageDrawable(appInfo.icon)
+            root.setOnClickListener {
+                onClickListener(appInfo)
+            }
         }
     }
+
+    private fun getAppLaunchInfo(appInfo: AppInfo) =
+        (appInfo.activityName?.let { activity -> "${appInfo.packageName}/$activity" }
+            ?: appInfo.packageName)
 
     fun updateList(appsList: List<AppInfo>) {
         this.appsList = appsList
