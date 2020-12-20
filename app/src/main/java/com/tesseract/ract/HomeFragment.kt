@@ -6,17 +6,24 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tesseract.launchersdk.LauncherSdk
 import com.tesseract.launchersdk.appinfo.AppInfo
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.util.Locale
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var appsList: List<AppInfo>
     private lateinit var launcherAdapter: LauncherAdapter
+
+     val homeViewModel by viewModels<HomeViewModel>()
+
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             filter(s.toString())
@@ -33,11 +40,34 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.home_fragment, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        appsList = LauncherSdk.getInstance(requireContext()).getInstalledApps()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        progress.isVisible = true
+        observeOnAppsListLiveData()
+        homeViewModel.getInstalledApps()
+    }
+
+    private fun observeOnAppsListLiveData() {
+        homeViewModel.installedAppsLiveData.observe(viewLifecycleOwner, Observer { apps ->
+            progress.isVisible = false
+            show(apps)
+        })
+    }
+
+    private fun show(apps: List<AppInfo>) {
+        this.appsList = apps
         initLauncherRecyclerView()
+        setAppClickListener()
         searchBar.addTextChangedListener(textWatcher)
+    }
+
+    private fun setAppClickListener() {
+        launcherAdapter.onAppClickListener = { appInfo ->
+            val launchIntent = appInfo.packageName?.let { pkg ->
+                requireContext().packageManager.getLaunchIntentForPackage(pkg)
+            }
+            launchIntent?.let(::startActivity)
+        }
     }
 
     private fun initLauncherRecyclerView() {

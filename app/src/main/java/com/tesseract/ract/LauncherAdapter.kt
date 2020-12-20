@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.row_launcher.view.*
 class LauncherAdapter(private var appsList: List<AppInfo>, private val context: Context) :
     RecyclerView.Adapter<LauncherAdapter.LaunchHolder>() {
 
-    lateinit var onClickListener: (appInfo: AppInfo) -> Unit
+    lateinit var onAppClickListener: (appInfo: AppInfo) -> Unit
 
     inner class LaunchHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -35,7 +35,7 @@ class LauncherAdapter(private var appsList: List<AppInfo>, private val context: 
             )
             icon.setImageDrawable(appInfo.icon)
             root.setOnClickListener {
-                onClickListener(appInfo)
+                onAppClickListener(appInfo)
             }
         }
     }
