@@ -20,7 +20,6 @@
         android:id="@+id/name"
         style="@style/HeadingStyle"
         android:accessibilityHeading="true"
-        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon"
         app:layout_constraintTop_toTopOf="@+id/icon"
