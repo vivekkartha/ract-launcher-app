@@ -4,8 +4,8 @@
     <!--Spacing -->
     <dimen name="spacing1x">8dp</dimen>
     <dimen name="spacing2x">16dp</dimen>
-    <dimen name="spacing3x">24p</dimen>
-    <dimen name="spacing4x">28p</dimen>
+    <dimen name="spacing3x">24dp</dimen>
+    <dimen name="spacing4x">28dp</dimen>
 
     <!-- Text size-->
     <dimen name="text_20sp">20sp</dimen>

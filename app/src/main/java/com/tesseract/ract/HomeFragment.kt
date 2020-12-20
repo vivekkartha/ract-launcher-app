@@ -15,6 +15,19 @@ import java.util.Locale
 
 class HomeFragment : Fragment() {
 
+    private lateinit var appsList: List<AppInfo>
+    private lateinit var launcherAdapter: LauncherAdapter
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            filter(s.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+            Unit
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,18 +59,5 @@ class HomeFragment : Fragment() {
 
     companion object {
         fun newInstance() = HomeFragment()
-    }
-
-    private lateinit var appsList: List<AppInfo>
-    private lateinit var launcherAdapter: LauncherAdapter
-    private val textWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            filter(s.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-            Unit
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
     }
 }
